@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 리스트 페이지</title>
+</head>
+
+<style>
+  .layout {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 40px;
+    text-align: center; /* 가운데 정렬을 위해 추가 */
+  }
+
+  table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* 테이블 내부 텍스트 가운데 정렬 */
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .button {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<body>
+
+<div class="layout">
+  <table>
+    <thead>
+    <tr>
+      <th>글번호</th>
+      <th>제목</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board : ${list}">
+      <td th:text="${board.id}">1</td>
+      <td>
+        <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+    <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page -1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+    <strong th:if="${page == nowPage}"  th:text="${page}" style="color : red"></strong>
+  </th:block>
+
+  <form th:action = "@{/board/list}" method = "get">
+    <input type="text" name ="searchKeyword">
+    <button type = "submit">검색</button>
+  </form>
+
+
+  <!-- 버튼을 클릭하면 /board/write로 POST 요청을 보냄 -->
+  <form action="/board/write" method="get">
+    <button class="button" type="submit">글쓰기</button>
+  </form>
+</div>
+
+</body>
+</html>

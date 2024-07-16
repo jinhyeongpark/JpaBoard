@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 상세 페이지</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .action-links {
+      margin-top: 20px;
+    }
+    .action-links a {
+      margin-right: 10px;
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .action-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 th:text="${board.title}">제목입니다.</h1>
+  <p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
+
+  <div class="action-links">
+    <a th:href="@{/board/delete(id=${board.id})}">글 삭제</a>
+    <a th:href="@{/board/modify/{id}(id=${board.id})}">수정</a>
+    <a th:href="@{${board.filepath}}">파일 보기</a>
+  </div>
+</div>
+
+</body>
+</html>
